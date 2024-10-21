@@ -1,0 +1,192 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    cursor: none; /* Bu satırı ekleyin */
+}
+
+/* Mevcut stillerin en üstüne bu satırı ekleyin */
+body {
+    cursor: none;
+}
+
+/* Ana sayfa için özel stiller */
+.home-page {
+    background: #000;
+    cursor: none;
+}
+
+#space-background, #sparkles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+#space-background {
+    z-index: 1;
+}
+
+#sparkles {
+    z-index: 2;
+}
+
+.content {
+    position: relative;
+    z-index: 3;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-container {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.profile-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: 3px solid white;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+.profile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.button {
+    display: block;
+    width: 180px;
+    padding: 12px 15px;
+    margin: 12px 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    text-align: center;
+    font-size: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    transition: all 0.4s;
+}
+
+.button:hover::before {
+    left: 100%;
+}
+
+.button-home:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+.button-projects:hover {
+    background-color: rgba(0, 255, 255, 0.3);
+    transform: scale(1.05);
+    border-color: cyan;
+}
+
+.button-social:hover {
+    background-color: rgba(255, 105, 180, 0.3);
+    transform: scale(1.05);
+    border-color: hotpink;
+}
+
+.button-contacts:hover {
+    background-color: rgba(255, 215, 0, 0.3);
+    transform: scale(1.05);
+    border-color: gold;
+}
+
+.page-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+    color: #333;
+}
+
+nav {
+    margin-top: 20px;
+}
+
+nav .button {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.inner-page .content {
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40px 0;
+}
+
+.page-content {
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    color: white;
+    max-width: 800px;
+    width: 90%;
+}
+
+.inner-page .button-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: transparent;
+}
+
+.inner-page .button {
+    margin: 10px;
+}
+
+h1 {
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+p {
+    color: #e0e0e0;
+    line-height: 1.6;
+}
