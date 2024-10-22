@@ -5,19 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ana Sayfa</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
 <body class="home-page">
     <canvas id="space-background"></canvas>
     <canvas id="sparkles"></canvas>
     <div class="content">
-        <div class="button-container">
+        <div class="left-content">
             <div class="profile-photo">
                 <img src="https://via.placeholder.com/150" alt="Profile Photo">
             </div>
-            <a href="index.html" class="button button-home">Home</a>
-            <a href="pages/projects.html" class="button button-projects">Projects</a>
-            <a href="pages/social-media.html" class="button button-social">Social Media</a>
-            <a href="pages/contacts.html" class="button button-contacts">Contacts</a>
+            <div class="button-container">
+                <a href="index.html" class="button button-home">Home</a>
+                <a href="pages/projects.html" class="button button-projects">Projects</a>
+                <a href="pages/contacts.html" class="button button-contacts">Contacts</a>
+            </div>
+            <div class="social-icons">
+                <a href="https://github.com/your-username" target="_blank" class="social-icon github">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/your-profile" target="_blank" class="social-icon linkedin">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://www.instagram.com/your-username" target="_blank" class="social-icon instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+        </div>
+        <div class="right-content">
+            <h1>Hakkımda</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
         </div>
     </div>
     <script src="js/space-background.js"></script>
