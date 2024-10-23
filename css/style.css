@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
 body, html {
     height: 100%;
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif; /* Poppins yazı stili eklendi */
     overflow: hidden;
     cursor: none; /* Bu satırı ekleyin */
 }
@@ -323,4 +325,16 @@ body {
 
 .email-button i {
     margin-right: 10px;
+}
+
+/* Kutucuk stili */
+.message-box {
+    background-color: rgba(255, 255, 255, 0.1); /* Yarı saydam beyaz arka plan */
+    border: 2px solid rgba(255, 255, 255, 0.3); /* Hafif beyaz kenar */
+    border-radius: 20px; /* Yuvarlatılmış köşeler */
+    padding: 2px 15px; /* Üst-alt 20px, sağ-sol 40px iç boşluk */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Gölge efekti */
+    max-width: 600px; /* Maksimum genişlik */
+    margin: 5px auto; /* Ortalamak için margin */
+    text-align: center; /* Metni ortala */
 }
