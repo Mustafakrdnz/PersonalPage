@@ -1,83 +1,129 @@
 document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById('meteor-shower');
+    if (!canvas) {
+        console.error("Canvas element 'meteor-shower' not found!");
+        return;
+    }
     const ctx = canvas.getContext('2d');
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
     let meteors = [];
-    let explosions = [];
+    let sparks = [];
 
     class Meteor {
         constructor() {
             this.x = Math.random() * canvas.width;
             this.y = 0;
-            this.size = Math.random() * 3 + 2; // Boyutu artırdık
-            this.speedX = (Math.random() - 0.5) * 2; // X hızını azalttık
-            this.speedY = Math.random() * 3 + 1; // Y hızını azalttık
-            this.color = `hsl(${Math.random() * 60 + 200}, 100%, 70%)`;
+            this.size = Math.random() * 5 + 10; // Boyutu artırdık
+            this.speedX = (Math.random() - 0.5) * 0.5;
+            this.speedY = Math.random() * 3 + 1;
+            this.color = this.generateStoneColor();
+            this.roughness = Math.random() * 0.4 + 0.6;
+        }
+
+        generateStoneColor() {
+            const r = Math.floor(Math.random() * 30 + 100);
+            const g = Math.floor(Math.random() * 30 + 80);
+            const b = Math.floor(Math.random() * 30 + 60);
+            return `rgb(${r}, ${g}, ${b})`;
         }
 
         update() {
             this.x += this.speedX;
             this.y += this.speedY;
+            this.createSparks();
+        }
+
+        draw() {
+            ctx.save();
+            ctx.beginPath();
+            
+            // Create a rough, stone-like shape
+            for (let i = 0; i < Math.PI * 2; i += 0.1) {
+                const radius = this.size * (1 + Math.random() * this.roughness - this.roughness / 2);
+                const x = this.x + Math.cos(i) * radius;
+                const y = this.y + Math.sin(i) * radius;
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            
+            ctx.closePath();
+            ctx.fillStyle = this.color;
+            ctx.fill();
+
+            // Add some shading
+            const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
+            gradient.addColorStop(0, 'rgba(255, 255, 255, 0.3)');
+            gradient.addColorStop(1, 'rgba(0, 0, 0, 0.3)');
+            ctx.fillStyle = gradient;
+            ctx.fill();
+
+            ctx.restore();
+
+            // Meteor tail
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y);
+            ctx.lineTo(this.x - this.speedX * 10, this.y - this.speedY * 10);
+            ctx.strokeStyle = 'rgba(255, 200, 100, 0.5)';
+            ctx.lineWidth = this.size / 3;
+            ctx.stroke();
+        }
+
+        createSparks() {
+            if (Math.random() < 0.3) {
+                sparks.push(new Spark(this.x, this.y, 'trail'));
+            }
+        }
+
+        explode() {
+            const sparkCount = Math.floor(this.size * 10); // Boyuta bağlı olarak kıvılcım sayısını ayarla
+            for (let i = 0; i < sparkCount; i++) {
+                sparks.push(new Spark(this.x, this.y, 'explosion'));
+            }
+        }
+    }
+
+    class Spark {
+        constructor(x, y, type) {
+            this.x = x;
+            this.y = y;
+            this.size = Math.random() * 2 + 3;
+            this.speedX = (Math.random() - 0.5) * (type === 'explosion' ? 3 : 0.5);
+            this.speedY = (Math.random() - 0.5) * (type === 'explosion' ? 3 : 0.5);
+            this.color = this.generateSparkColor();
+            this.life = type === 'explosion' ? 40 : 100;
+        }
+
+        generateSparkColor() {
+            const hue = Math.random() * 60 + 10; // 10 to 70 (yellow to red)
+            return `hsl(${hue}, 100%, 50%)`;
+        }
+
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            this.life--;
+            this.size *= 0.95;
+            if (this.speedY < 1) {
+                this.speedY += -0.01; // Gravity effect
+            }
         }
 
         draw() {
             ctx.beginPath();
-            ctx.moveTo(this.x, this.y);
-            ctx.lineTo(this.x - this.speedX * 10, this.y - this.speedY * 10);
-            ctx.strokeStyle = this.color;
-            ctx.lineWidth = this.size;
-            ctx.stroke();
-        }
-    }
-
-    class Explosion {
-        constructor(x, y, color) {
-            this.x = x;
-            this.y = y;
-            this.color = color;
-            this.particles = [];
-            for (let i = 0; i < 20; i++) {
-                this.particles.push({
-                    x: this.x,
-                    y: this.y,
-                    radius: Math.random() * 2 + 1,
-                    speed: Math.random() * 3 + 1,
-                    angle: Math.random() * Math.PI * 2,
-                    opacity: 1
-                });
-            }
-        }
-
-        update() {
-            this.particles.forEach(particle => {
-                particle.x += Math.cos(particle.angle) * particle.speed;
-                particle.y += Math.sin(particle.angle) * particle.speed;
-                particle.opacity -= 0.02;
-            });
-            this.particles = this.particles.filter(particle => particle.opacity > 0);
-        }
-
-        draw() {
-            this.particles.forEach(particle => {
-                ctx.beginPath();
-                ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${this.color}, ${particle.opacity})`;
-                ctx.fill();
-            });
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.fill();
         }
     }
 
     function createMeteor() {
         meteors.push(new Meteor());
-    }
-
-    function removeMeteor(index) {
-        const meteor = meteors[index];
-        explosions.push(new Explosion(meteor.x, meteor.y, '255, 255, 255'));
-        meteors.splice(index, 1);
     }
 
     function updateMeteors() {
@@ -89,11 +135,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function updateExplosions() {
-        for (let i = explosions.length - 1; i >= 0; i--) {
-            explosions[i].update();
-            if (explosions[i].particles.length === 0) {
-                explosions.splice(i, 1);
+    function updateSparks() {
+        for (let i = sparks.length - 1; i >= 0; i--) {
+            sparks[i].update();
+            if (sparks[i].life <= 0) {
+                sparks.splice(i, 1);
             }
         }
     }
@@ -102,38 +148,38 @@ document.addEventListener('DOMContentLoaded', () => {
         meteors.forEach(meteor => meteor.draw());
     }
 
-    function drawExplosions() {
-        explosions.forEach(explosion => explosion.draw());
-    }
-
-    function checkCollision(x, y) {
-        for (let i = meteors.length - 1; i >= 0; i--) {
-            const dx = meteors[i].x - x;
-            const dy = meteors[i].y - y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            if (distance < 30) { // Çarpışma mesafesini artırdık
-                removeMeteor(i);
-            }
-        }
+    function drawSparks() {
+        sparks.forEach(spark => spark.draw());
     }
 
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         updateMeteors();
-        updateExplosions();
+        updateSparks();
         drawMeteors();
-        drawExplosions();
-        if (Math.random() < 0.05) createMeteor(); // Meteor oluşturma sıklığını azalttık
+        drawSparks();
+        if (Math.random() < 0.02) createMeteor();
         requestAnimationFrame(animate);
     }
 
     animate();
 
-    document.addEventListener('mousemove', (e) => {
+    document.addEventListener('mousemove', (event) => {
         const rect = canvas.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        checkCollision(x, y);
+        const mouseX = event.clientX - rect.left;
+        const mouseY = event.clientY - rect.top;
+
+        for (let i = meteors.length - 1; i >= 0; i--) {
+            const meteor = meteors[i];
+            const dx = meteor.x - mouseX;
+            const dy = meteor.y - mouseY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < meteor.size + 10) {
+                meteor.explode();
+                meteors.splice(i, 1);
+            }
+        }
     });
 
     window.addEventListener('resize', () => {
