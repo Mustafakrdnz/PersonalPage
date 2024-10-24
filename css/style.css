@@ -5,7 +5,7 @@ body, html {
     margin: 0;
     font-family: 'Poppins', sans-serif;
     overflow-x: hidden; /* Yatay kaydırmayı engelle */
-    overflow-y: auto; /* Dikey kaydırmaya izin ver */
+    overflow-y:auto; /* Dikey kaydırmaya izin ver */
     cursor: none;
 }
 
@@ -145,29 +145,60 @@ body, html {
     padding-top: 20px;
 }
 
+.mobile-nav-toggle {
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
 .top-nav {
     display: flex;
     justify-content: center;
+    align-items: center;
     margin-bottom: 30px;
     margin-top: 10px;
+    flex-wrap: wrap; /* Mobil görünümde sarmalama için */
+    gap: 10px; /* Butonlar arası boşluk */
+    padding: 0 15px; /* Yanlarda boşluk */
+    width: 100%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .nav-button {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background-color: rgba(255, 255, 255, 0.1);
     color: white;
     text-decoration: none;
     padding: 10px 20px;
-    margin: 0 15px;
+    margin: 5px;
     border-radius: 20px;
     transition: all 0.3s ease;
     border: 2px solid;
     border-color: #ffffff54;
+    min-width: 120px; /* Minimum genişlik */
+    text-align: center;
 }
 
 .nav-button:hover {
     background-color: rgba(89, 221, 221, 0.2);
     transform: scale(1.05);
+    border-color: #ffffff;
+}
+/* Aktif sayfa için özel stil */
+.nav-button.active {
+    background-color: rgba(255, 255, 255, 0.2);
     border-color: #ffffff;
 }
 
@@ -193,6 +224,7 @@ body, html {
 
 /* Responsive tasarım için medya sorgusu */
 @media (max-width: 768px) {
+    
     .home-page .content {
         flex-direction: column;
         padding-top: 40px; /* Üst kısımda boşluk bırak */
@@ -221,6 +253,61 @@ body, html {
         width: 100%;
         height: 100%;
         pointer-events: none;
+    }
+    .top-nav {
+        flex-direction: column;
+        margin: 15px 0;
+        padding: 10px;
+        background-color: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        max-width: 90%;
+    }
+
+    .nav-button {
+        width: 100%;
+        max-width: 250px;
+        margin: 5px 0;
+        padding: 12px 20px;
+        font-size: 16px;
+    }
+    
+    /* İç sayfalar için content padding ayarı */
+    .inner-page .content {
+        padding-top: 10px;
+    }
+
+    /* Sayfa içeriği için margin ayarı */
+    .page-content {
+        margin-top: 10px;
+        width: 85%;
+        padding: 20px 15px;
+    }
+}
+@media (max-width: 480px) {
+    .top-nav {
+        margin: 10px 0;
+    }
+
+    .nav-button {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+    
+    /* Sayfa içeriği için daha kompakt görünüm */
+    .page-content {
+        padding: 15px 10px;
+    }
+}
+
+/* Orta boy ekranlar için optimizasyon */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .top-nav {
+        max-width: 80%;
+    }
+
+    .nav-button {
+        min-width: 100px;
+        margin: 5px 10px;
     }
 }
 
