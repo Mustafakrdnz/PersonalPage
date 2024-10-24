@@ -11,6 +11,7 @@ body, html {
 /* Mevcut stillerin en üstüne bu satırı ekleyin */
 body {
     cursor: none;
+    overflow: auto; /* Kaydırma çubuğunu etkinleştir */
 }
 
 /* Ana sayfa için özel stiller */

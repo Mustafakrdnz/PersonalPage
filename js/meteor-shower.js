@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         constructor() {
             this.x = Math.random() * canvas.width;
             this.y = 0;
-            this.size = Math.random() * 5 + 10; // Boyutu artırdık
+            this.size = Math.random() * 5 + 10;
             this.speedX = (Math.random() - 0.5) * 0.5;
             this.speedY = Math.random() * 3 + 1;
             this.color = this.generateStoneColor();
