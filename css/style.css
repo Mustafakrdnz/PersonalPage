@@ -3,21 +3,19 @@
 body, html {
     height: 100%;
     margin: 0;
-    font-family: 'Poppins', sans-serif; /* Poppins yazı stili eklendi */
-    overflow: hidden;
-    cursor: none; /* Bu satırı ekleyin */
-}
-
-/* Mevcut stillerin en üstüne bu satırı ekleyin */
-body {
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden; /* Yatay kaydırmayı engelle */
+    overflow-y: auto; /* Dikey kaydırmaya izin ver */
     cursor: none;
-    overflow: auto; /* Kaydırma çubuğunu etkinleştir */
 }
 
 /* Ana sayfa için özel stiller */
 .home-page {
     background: #000;
     cursor: none;
+    min-height: 100vh;
+    position: relative;
+    padding: 20px 0;
 }
 
 #space-background, #sparkles {
@@ -36,12 +34,11 @@ body {
 #sparkles {
     z-index: 2;
 }
-
 /* Genel içerik stili */
 .content {
     position: relative;
     z-index: 3;
-    height: 100%;
+    min-height: 100vh; /* height: 100% yerine min-height: 100vh kullanın */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -198,6 +195,10 @@ body {
 @media (max-width: 768px) {
     .home-page .content {
         flex-direction: column;
+        padding-top: 40px; /* Üst kısımda boşluk bırak */
+        min-height: auto; /* Otomatik yükseklik */
+        height: auto;
+        margin-bottom: 40px;
     }
 
     .left-content {
@@ -209,6 +210,17 @@ body {
 
     .right-content {
         max-width: 90%;
+        margin-bottom: 20px;
+    }
+
+    /* Canvas pozisyonunu düzelt */
+    #space-background, #sparkles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
     }
 }
 
@@ -217,7 +229,7 @@ body {
     height: 150px;
     border-radius: 50%;
     overflow: hidden;
-    margin-bottom: 20px;
+    margin: 20px auto; /* Margin'i güncelle */
     border: 3px solid white;
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
 }
